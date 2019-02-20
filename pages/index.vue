@@ -1,25 +1,19 @@
 <template>
   <section class="container">
+    <div class="form">
+      <textarea cols="30" rows="10" v-model="newTweet">
+      </textarea>
+      <button @click="addTweet">ツイート</button>
+    </div>
     <div>
-      <logo />
-      <h1 class="title">
-        app
-      </h1>
-      <h2 class="subtitle">
-        My stupendous Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >GitHub</a>
-      </div>
+      <article class="tweet row" v-for="tweet in tweets">
+        <p class="col-6">
+          {{ tweet.content }}
+        </p>
+        <p class="col-6">
+          @{{ tweet.ahtuor }}
+        </p>
+      </article>
     </div>
   </section>
 </template>
@@ -30,6 +24,31 @@ import Logo from '~/components/Logo.vue'
 export default {
   components: {
     Logo
+  },
+  asyncData (context) {
+    return {
+      tweets: [
+        {
+          ahtuor: "foo",
+          content: "first tweet",
+        },
+        {
+          ahtuor: "bar",
+          content: "second tweet",
+        },
+      ],
+      newTweet: ""
+    }
+  },
+  methods: {
+    addTweet: function () {
+      let tweet = {
+        ahtuor: "hoge",
+        content: this.newTweet,
+      }
+      this.tweets.push(tweet)
+      this.newTweet = ""
+    }
   }
 }
 </script>
